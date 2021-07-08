@@ -1,26 +1,104 @@
-(function() {
-    const gameBoard = {
-        gameBoard: ['X', 'X', 'X', 'O', 'O', 'O', 'X', 'X', 'X'],
-        container: document.querySelector('.container'),
-        playArea: document.querySelectorAll('.playArea'),
-        displayBoard: () => {
-            for (let i = 0; i < gameBoard.playArea.length; i++) {
-                if (gameBoard.gameBoard[i] == undefined) {
-                    return;
-                }
-                gameBoard.playArea[i].innerHTML = gameBoard.gameBoard[i];
-            }
-        },
-        
+const gameBoard = (function() {
+    const gameBoardPositions = ['', '', '', '', '', '', '', '', ''];   
+
+    return { gameBoardPositions }  
+})();
+
+const displayController = (() => {
+    const playArea = document.querySelectorAll('.playArea');
+    const displayBoard = () => {
+        for (let i = 0; i < playArea.length; i++) {
+            playArea[i].position = i;
+            playArea[i].innerHTML = gameBoard.gameBoardPositions[i];
+        }
+    }
+    
+    
+    return { playArea, displayBoard }        
+})();
+
+displayController.displayBoard();
+
+
+const Player = (typeofmark) => {
+    let position;
+    const populateDisplay = (e, typeofmark) => {
+        position = e.target.position;
+        if (gameBoard.gameBoardPositions[position] != '') {
+            //gameFlow.stopShiftChange();
+            return false;
+        } 
+        gameBoard.gameBoardPositions[position] = typeofmark;
+        displayController.displayBoard();
+        return true;
+    }
+
+    const event = e => {
+        gameFlow.addShiftChange();
+        let result = populateDisplay(e, typeofmark);
+        if (result) {
+            //gameFlow.addShiftChange();
+            removeEvent();
+            //return;
+        } /* else {
+            //gameFlow.stopShiftChange();
+            return;
+        } */
         
     }
 
-    gameBoard.displayBoard();
-})()
+    const addEvent = () => {
+        displayController.playArea.forEach(square => {
+            square.addEventListener('click', event);
+        });
 
-const Player = () => {
-    let human = Boolean;
-    return {};
+    }
+    
+    const removeEvent = () => {
+        displayController.playArea.forEach(square => {
+            square.removeEventListener('click', event)})
+    }
+    
+    return { addEvent, position };
 }
 
-let human1 = Player();
+const gameFlow = (() => {
+    let firstPlayerTurn = true;
+    let human1 = Player('X');
+    let human2 = Player('O');
+    //human2.addEvent();
+
+    
+
+    const changeTurn = () => {
+        //console.log(gameBoard.gameBoardPositions[position])
+       /*  if (gameBoard.gameBoardPositions[position] != '') {
+            console.log('oara')
+            return;
+        } else  */if (firstPlayerTurn) {
+            human2.addEvent(); 
+            firstPlayerTurn = false;  
+        } else if (firstPlayerTurn === false) {
+            human1.addEvent();
+            firstPlayerTurn = true;
+        }
+    }
+    
+    const addShiftChange = () => {
+            displayController.playArea.forEach(square => {
+            square.addEventListener('click', changeTurn);
+        })
+    }
+
+    const stopShiftChange = () => {
+        displayController.playArea.forEach(square => {
+            square.removeEventListener('click', changeTurn);
+        })
+    }
+
+    human1.addEvent();
+    addShiftChange()
+
+    return { stopShiftChange, addShiftChange }
+})();
+
