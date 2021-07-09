@@ -1,6 +1,8 @@
 const gameBoard = (function() {
     const gameBoardPositions = ['', '', '', '', '', '', '', '', ''];   
+    const checkGameBoard = () => {
 
+    }
     return { gameBoardPositions }  
 })();
 
@@ -19,13 +21,12 @@ const displayController = (() => {
 
 displayController.displayBoard();
 
+let permissionToChangeTurn = false;
 
 const Player = (typeofmark) => {
-    let position;
     const populateDisplay = (e, typeofmark) => {
-        position = e.target.position;
+        let position = e.target.position;
         if (gameBoard.gameBoardPositions[position] != '') {
-            //gameFlow.stopShiftChange();
             return false;
         } 
         gameBoard.gameBoardPositions[position] = typeofmark;
@@ -34,24 +35,18 @@ const Player = (typeofmark) => {
     }
 
     const event = e => {
-        gameFlow.addShiftChange();
         let result = populateDisplay(e, typeofmark);
         if (result) {
-            //gameFlow.addShiftChange();
             removeEvent();
-            //return;
-        } /* else {
-            //gameFlow.stopShiftChange();
-            return;
-        } */
-        
+            gameFlow.changeTurn();
+        }
+        return;
     }
 
     const addEvent = () => {
         displayController.playArea.forEach(square => {
             square.addEventListener('click', event);
         });
-
     }
     
     const removeEvent = () => {
@@ -59,23 +54,17 @@ const Player = (typeofmark) => {
             square.removeEventListener('click', event)})
     }
     
-    return { addEvent, position };
+    return { addEvent };
 }
 
 const gameFlow = (() => {
     let firstPlayerTurn = true;
-    let human1 = Player('X');
-    let human2 = Player('O');
-    //human2.addEvent();
 
-    
+    let human1 = Player('X');
+    let human2 = Player('O');    
 
     const changeTurn = () => {
-        //console.log(gameBoard.gameBoardPositions[position])
-       /*  if (gameBoard.gameBoardPositions[position] != '') {
-            console.log('oara')
-            return;
-        } else  */if (firstPlayerTurn) {
+       if (firstPlayerTurn) {
             human2.addEvent(); 
             firstPlayerTurn = false;  
         } else if (firstPlayerTurn === false) {
@@ -83,22 +72,10 @@ const gameFlow = (() => {
             firstPlayerTurn = true;
         }
     }
+
+   
     
-    const addShiftChange = () => {
-            displayController.playArea.forEach(square => {
-            square.addEventListener('click', changeTurn);
-        })
-    }
-
-    const stopShiftChange = () => {
-        displayController.playArea.forEach(square => {
-            square.removeEventListener('click', changeTurn);
-        })
-    }
-
     human1.addEvent();
-    addShiftChange()
 
-    return { stopShiftChange, addShiftChange }
+    return { changeTurn }
 })();
-
