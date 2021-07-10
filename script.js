@@ -138,11 +138,23 @@ const gameFlow = (() => {
     }
 
    const displayWinner = () => {
-       human1.removeEvent();
-       human2.removeEvent();
-       console.log('removido!')
-   }
+        if (firstPlayerTurn) {
+            console.log('Jugador 1 GANA!');
+            const winnerModal = document.getElementById('winnerModal');
+            winnerModal.style.display = 'flex';
+            const restartGame = document.getElementById('restart-game');
+            restartGame.addEventListener('click', () => {
+                winnerModal.style.display = 'none';
+            })
+        } else if (!firstPlayerTurn) {
+            console.log('Jugador 2 GANA!');
+        }
+    }
     
+    const clearGameBoard = () => {
+        
+    }
+
     human1.addEvent();
 
     return { changeTurn, displayWinner }
