@@ -2,6 +2,8 @@ const gameBoard = (function() {
     const gameBoardPositions = ['', '', '', '', '', '', '', '', ''];   
     const checkGameBoard = () => {
         let isThereAWinner = false;
+        let tie = 0;
+
         switch (true) {
             case gameBoardPositions[0] == gameBoardPositions[1] &&
                  gameBoardPositions[0] == gameBoardPositions[2] &&
@@ -53,9 +55,19 @@ const gameBoard = (function() {
         }
         
         if (isThereAWinner) {
-            //gameFlow.displayWinner();
             return true;
         } 
+        //CHECK FOR TIE
+        for(let i = 0; i < gameBoard.gameBoardPositions.length; i++) {
+            if (gameBoard.gameBoardPositions[i] != '') {
+                tie++;
+            }
+        } 
+
+        if (tie === 9) {
+            return 'tie';
+        }
+        //CONTINUE GAME 
         return false;
     }
     
@@ -96,9 +108,14 @@ const Player = (typeofmark) => {
         if (result) {
             removeEvent();
             let gameOver = gameBoard.checkGameBoard();
-            if (gameOver) {
-                gameFlow.displayWinner();
-            } else {
+            if (gameOver === true) {
+                setTimeout(() => {
+                    gameFlow.displayWinner();
+                }, 500);
+            } else if (gameOver === 'tie') {
+                gameFlow.displayTie();
+            } 
+            else {
                 gameFlow.changeTurn();
             }
         }
@@ -145,17 +162,55 @@ const gameFlow = (() => {
             const restartGame = document.getElementById('restart-game');
             restartGame.addEventListener('click', () => {
                 winnerModal.style.display = 'none';
-            })
+                clearGameBoard();
+                human1.addEvent();
+            });
         } else if (!firstPlayerTurn) {
             console.log('Jugador 2 GANA!');
+            const winnerModal = document.getElementById('winnerModal');
+            winnerModal.style.display = 'flex';
+            const restartGame = document.getElementById('restart-game');
+            restartGame.addEventListener('click', () => {
+                winnerModal.style.display = 'none';
+                clearGameBoard();
+                human1.addEvent();
+            });
+            
         }
     }
     
     const clearGameBoard = () => {
+        for(let i = 0; i < gameBoard.gameBoardPositions.length; i++) {
+            gameBoard.gameBoardPositions[i] = '';
+            displayController.displayBoard();
+        } 
+    }
+
+    const displayTie = () => {
+        const winnerModal = document.getElementById('winnerModal');
+        winnerModal.style.display = 'flex';
+        winnerModal.style.justifyContent = 'space-around';
+        const restartGame = document.getElementById('restart-game');
+        const TIE_MESSAGE = document.createElement('h3');
+        TIE_MESSAGE.textContent = "IT'S A TIE!";
+        TIE_MESSAGE.className = 'tie-message';
+        const celebrateIcon = document.querySelector('lord-icon');
+        celebrateIcon.style.display = 'none';
+        winnerModal.appendChild(TIE_MESSAGE);
         
+        let events = () => {
+            winnerModal.style.display = 'none';
+            winnerModal.style.justifyContent = 'space-between';
+            celebrateIcon.style.display = 'block';
+            winnerModal.removeChild(TIE_MESSAGE);
+            clearGameBoard();
+            human1.addEvent();
+            restartGame.removeEventListener('click', events);
+        } 
+        restartGame.addEventListener('click', events);        
     }
 
     human1.addEvent();
 
-    return { changeTurn, displayWinner }
+    return { changeTurn, displayWinner, displayTie }
 })();
