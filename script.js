@@ -158,20 +158,28 @@ const gameFlow = (() => {
         if (firstPlayerTurn) {
             console.log('Jugador 1 GANA!');
             const winnerModal = document.getElementById('winnerModal');
-            winnerModal.style.display = 'flex';
+            winnerModal.style.transition = 'all 500ms ease-in';
+            winnerModal.style.opacity = '1';
+            winnerModal.style.pointerEvents = 'auto';
             const restartGame = document.getElementById('restart-game');
             restartGame.addEventListener('click', () => {
-                winnerModal.style.display = 'none';
+                console.log(firstPlayerTurn)
+                winnerModal.style.opacity = '0';
+                winnerModal.style.pointerEvents = 'none';
                 clearGameBoard();
                 human1.addEvent();
             });
         } else if (!firstPlayerTurn) {
             console.log('Jugador 2 GANA!');
             const winnerModal = document.getElementById('winnerModal');
-            winnerModal.style.display = 'flex';
+            winnerModal.style.transition = 'all 500ms ease-in';
+            winnerModal.style.opacity = '1';
+            winnerModal.style.pointerEvents = 'auto';
             const restartGame = document.getElementById('restart-game');
             restartGame.addEventListener('click', () => {
-                winnerModal.style.display = 'none';
+                console.log(firstPlayerTurn)
+                winnerModal.style.opacity = '0';
+                winnerModal.style.pointerEvents = 'none';
                 clearGameBoard();
                 human1.addEvent();
             });
@@ -181,14 +189,16 @@ const gameFlow = (() => {
     
     const clearGameBoard = () => {
         for(let i = 0; i < gameBoard.gameBoardPositions.length; i++) {
+            firstPlayerTurn = true;
             gameBoard.gameBoardPositions[i] = '';
             displayController.displayBoard();
         } 
     }
 
     const displayTie = () => {
-        const winnerModal = document.getElementById('winnerModal');
-        winnerModal.style.display = 'flex';
+        const winnerModal = document.getElementById('winnerModal');winnerModal.style.transition = 'all 300ms ease-in';
+        winnerModal.style.opacity = '1';
+        winnerModal.style.pointerEvents = 'auto';
         winnerModal.style.justifyContent = 'space-around';
         const restartGame = document.getElementById('restart-game');
         const TIE_MESSAGE = document.createElement('h3');
@@ -199,9 +209,12 @@ const gameFlow = (() => {
         winnerModal.appendChild(TIE_MESSAGE);
         
         let events = () => {
-            winnerModal.style.display = 'none';
+            winnerModal.style.opacity = '0';
+            winnerModal.style.pointerEvents = 'none';
             winnerModal.style.justifyContent = 'space-between';
-            celebrateIcon.style.display = 'block';
+            setTimeout(() => {                
+                celebrateIcon.style.display = 'block';
+            },500)
             winnerModal.removeChild(TIE_MESSAGE);
             clearGameBoard();
             human1.addEvent();
