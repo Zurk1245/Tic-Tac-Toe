@@ -75,6 +75,8 @@ const gameBoard = (function() {
 })();
 
 const displayController = (() => {
+    const player1 = document.getElementById('player1');
+    const player2 = document.getElementById('player2');
     const playArea = document.querySelectorAll('.playArea');
     const displayBoard = () => {
         for (let i = 0; i < playArea.length; i++) {
@@ -84,7 +86,7 @@ const displayController = (() => {
     }
     
     
-    return { playArea, displayBoard }        
+    return { playArea, displayBoard, player1, player2 }        
 })();
 
 displayController.displayBoard();
@@ -106,6 +108,8 @@ const Player = (typeofmark) => {
     const event = e => {
         let result = populateDisplay(e, typeofmark);
         if (result) {
+            displayController.player1.disabled = true;
+            displayController.player2.disabled = true;
             removeEvent();
             let gameOver = gameBoard.checkGameBoard();
             if (gameOver === true) {
@@ -155,36 +159,51 @@ const gameFlow = (() => {
     }
 
    const displayWinner = () => {
+        let winner;
         if (firstPlayerTurn) {
-            console.log('Jugador 1 GANA!');
-            const winnerModal = document.getElementById('winnerModal');
-            winnerModal.style.transition = 'all 500ms ease-in';
-            winnerModal.style.opacity = '1';
-            winnerModal.style.pointerEvents = 'auto';
-            const restartGame = document.getElementById('restart-game');
-            restartGame.addEventListener('click', () => {
-                console.log(firstPlayerTurn)
-                winnerModal.style.opacity = '0';
-                winnerModal.style.pointerEvents = 'none';
-                clearGameBoard();
-                human1.addEvent();
-            });
+            //console.log(displayController.player1.value);
+            if (displayController.player1.value == '') {
+                winner = 'Player 1';
+            } else {
+                winner = displayController.player1.value;
+            }
         } else if (!firstPlayerTurn) {
-            console.log('Jugador 2 GANA!');
+            if (displayController.player2.value == '') {
+                winner = 'Player 2';
+            } else {
+                winner = displayController.player2.value;
+            }
+            /* console.log('Jugador 2 GANA!');
             const winnerModal = document.getElementById('winnerModal');
             winnerModal.style.transition = 'all 500ms ease-in';
             winnerModal.style.opacity = '1';
             winnerModal.style.pointerEvents = 'auto';
             const restartGame = document.getElementById('restart-game');
             restartGame.addEventListener('click', () => {
-                console.log(firstPlayerTurn)
                 winnerModal.style.opacity = '0';
                 winnerModal.style.pointerEvents = 'none';
                 clearGameBoard();
                 human1.addEvent();
-            });
+            }); */
             
         }
+        //console.log('Jugador 1 GANA!');
+            const winnerModal = document.getElementById('winnerModal');
+            winnerModal.style.transition = 'all 500ms ease-in';
+            winnerModal.style.opacity = '1';
+            winnerModal.style.pointerEvents = 'auto';
+            const winnerMessage = document.getElementById('winner-message');
+            winnerMessage.innerHTML = `The winner is ${winner}!`;
+            const restartGame = document.getElementById('restart-game');
+            restartGame.addEventListener('click', () => {
+                winnerModal.style.opacity = '0';
+                winnerModal.style.pointerEvents = 'none';
+                displayController.player1.disabled = false;
+                displayController.player2.disabled = false;
+                clearGameBoard();
+                human1.addEvent();
+            });
+        
     }
     
     const clearGameBoard = () => {

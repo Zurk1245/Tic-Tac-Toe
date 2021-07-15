@@ -13,6 +13,10 @@
 <body>
     <h1>Tic Tac Toe Game</h1>
     <section class="gameBoard-section">
+        <div class="players-div">
+            <input id="player1" type="text" class="playerInput" placeholder='Player 1' maxlength="12">
+            <input id="player2" type="text" class="playerInput" placeholder='Player 2' maxlength="12">
+        </div>
         <div class="container">
             <div class="playArea"></div>
             <div class="playArea"></div>
@@ -29,8 +33,9 @@
     <div class="container_modal">
         <div id="winnerModal">
             <button id="restart-game">Restart game</button>
+            <h3 id="winner-message"></h3>
             <lord-icon src="https://cdn.lordicon.com//lupuorrc.json" trigger="loop"
-                colors="primary:#4030e8,secondary:#e8308c" stroke="75">
+                colors="primary:#ffffff,secondary:#0C2D48" stroke="75">
             </lord-icon>
         </div>
     </div>
