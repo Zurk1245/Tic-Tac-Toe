@@ -161,7 +161,6 @@ const gameFlow = (() => {
    const displayWinner = () => {
         let winner;
         if (firstPlayerTurn) {
-            //console.log(displayController.player1.value);
             if (displayController.player1.value == '') {
                 winner = 'Player 1';
             } else {
@@ -173,26 +172,13 @@ const gameFlow = (() => {
             } else {
                 winner = displayController.player2.value;
             }
-            /* console.log('Jugador 2 GANA!');
-            const winnerModal = document.getElementById('winnerModal');
-            winnerModal.style.transition = 'all 500ms ease-in';
-            winnerModal.style.opacity = '1';
-            winnerModal.style.pointerEvents = 'auto';
-            const restartGame = document.getElementById('restart-game');
-            restartGame.addEventListener('click', () => {
-                winnerModal.style.opacity = '0';
-                winnerModal.style.pointerEvents = 'none';
-                clearGameBoard();
-                human1.addEvent();
-            }); */
-            
         }
-        //console.log('Jugador 1 GANA!');
             const winnerModal = document.getElementById('winnerModal');
             winnerModal.style.transition = 'all 500ms ease-in';
             winnerModal.style.opacity = '1';
             winnerModal.style.pointerEvents = 'auto';
             const winnerMessage = document.getElementById('winner-message');
+            winnerMessage.style.display = 'block';
             winnerMessage.innerHTML = `The winner is ${winner}!`;
             const restartGame = document.getElementById('restart-game');
             restartGame.addEventListener('click', () => {
@@ -203,7 +189,6 @@ const gameFlow = (() => {
                 clearGameBoard();
                 human1.addEvent();
             });
-        
     }
     
     const clearGameBoard = () => {
@@ -220,14 +205,20 @@ const gameFlow = (() => {
         winnerModal.style.pointerEvents = 'auto';
         winnerModal.style.justifyContent = 'space-around';
         const restartGame = document.getElementById('restart-game');
+        const winnerMessage = document.getElementById('winner-message');
+        winnerMessage.innerHTML = '';
+        winnerMessage.style.display = 'none';
         const TIE_MESSAGE = document.createElement('h3');
         TIE_MESSAGE.textContent = "IT'S A TIE!";
         TIE_MESSAGE.className = 'tie-message';
-        const celebrateIcon = document.querySelector('lord-icon');
+        const celebrateIcon = document.getElementById('lord-icon-winner');
         celebrateIcon.style.display = 'none';
-        winnerModal.appendChild(TIE_MESSAGE);
+        const tieIcon = document.getElementById('lord-icon-tie');
+        tieIcon.style.display = 'block';
+        winnerModal.insertBefore(TIE_MESSAGE, tieIcon);
         
         let events = () => {
+            tieIcon.style.display = 'none';
             winnerModal.style.opacity = '0';
             winnerModal.style.pointerEvents = 'none';
             winnerModal.style.justifyContent = 'space-between';
@@ -235,6 +226,8 @@ const gameFlow = (() => {
                 celebrateIcon.style.display = 'block';
             },500)
             winnerModal.removeChild(TIE_MESSAGE);
+            displayController.player1.disabled = false;
+            displayController.player2.disabled = false;
             clearGameBoard();
             human1.addEvent();
             restartGame.removeEventListener('click', events);

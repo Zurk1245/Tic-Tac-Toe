@@ -98,6 +98,7 @@ h1 {
 
 #winner-message {
     font-size: 3.4em;
+    background-color: var(--secondary);
     color: var(--stranger); 
     width: fit-content;
     max-width: 90%;
@@ -126,11 +127,19 @@ h1 {
     border: 9px solid var(--secondary);
 }
 
-lord-icon {
+#lord-icon-winner {
     width: 200px;
     height: 200px;
     justify-self: flex-end;
 }
+
+#lord-icon-tie {
+    width: 200px;
+    height: 200px;
+    display: none;
+    justify-self: flex-end;
+}
+
 
 /* #icon {
     position: absolute;
