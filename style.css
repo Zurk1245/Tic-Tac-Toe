@@ -19,6 +19,7 @@ body {
 }
 
 h1 {
+    width: fit-content;
     max-width: 600px;
     font-size: 4rem;
     margin: 0 auto;
@@ -152,6 +153,9 @@ h1 {
 .tie-message {
     color: var(--stranger);
     font-size: 5rem;
+    width: fit-content;
+    max-width: 90%;
+    text-align: center;
 }
 
 .credits {
@@ -189,4 +193,38 @@ h1 {
 
 .credits > .name:hover::after {
     transform: scale(1, 1);
+}
+
+@media screen and (max-width: 1050px) {
+    h1 {
+        font-size: 2.5rem;
+    }
+
+    .gameBoard-section {
+        width: 70%;
+        margin: 60px auto;
+        height: 70vh;
+    }
+
+    
+
+    .container > .playArea {
+        font-size: 7rem;
+    }
+
+    .players-div {
+        top: 60px;
+    }
+
+    .playerInput {
+        font-size: 1.4em;
+    }
+    
+    #winner-message {
+        font-size: 2.4em;
+    }
+
+    .tie-message {
+        font-size: 3rem;
+    }
 }
