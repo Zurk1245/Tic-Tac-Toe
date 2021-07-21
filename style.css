@@ -32,14 +32,11 @@ h1 {
 }
 
 .container {
-
     width: 100%;
     height: 100%;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-rows: 1fr 1fr 1fr;
-    /* border: 5px solid black; */
-    /* border-radius: 20px; */
     row-gap: 7px;
     column-gap: 7px;
 }
@@ -88,6 +85,8 @@ h1 {
     top: 15vh;
     left: 25vw;
     border: 10px solid var(--secondary);
+    border-top: 10px solid rgb(89, 223, 0);
+    border-bottom: 10px solid rgb(89, 223, 0);
     border-radius: 50px;
     opacity: 0;
     pointer-events: none;
@@ -103,6 +102,7 @@ h1 {
     color: var(--stranger); 
     width: fit-content;
     max-width: 75%;
+    margin: 30px 0;
     text-align: center;
     padding: 17px 10px;
     box-shadow: 0px 0px 20px 10px #000000;
@@ -110,6 +110,7 @@ h1 {
 }
 
 #winnerModal > #restart-game {
+    width: fit-content;
     background-color: var(--secondary);
     color: var(--stranger);
     font-size: 2rem;
@@ -210,7 +211,8 @@ h1 {
     }
     
     #winnerModal {
-        border: 10px solid var(--primary);
+        border-right: 10px solid var(--primary);
+        border-left: 10px solid var(--primary);
     }
 
     #winner-message {
@@ -233,9 +235,16 @@ h1 {
         width: 150px;
     }
 
+    #winnerModal {
+        width: 70vw;
+        top: 15vh;
+        left: 15vw;
+        
+    }
+
     #winnerModal > #restart-game {
         font-size: 1.5rem;
-        padding: 10px;
+        padding: 2px;
     }
 
     #winner-message {
@@ -268,8 +277,14 @@ h1 {
         width: 100px;
     }
 
+    
+
+    .container > .playArea {
+        font-size: 5rem;
+    }
+
     #winner-message {
-        font-size: 2em;
+        font-size: 1.5em;
     }
 
     .tie-message {
