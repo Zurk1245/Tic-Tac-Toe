@@ -91,8 +91,6 @@ const displayController = (() => {
 
 displayController.displayBoard();
 
-let permissionToChangeTurn = false;
-
 const Player = (typeofmark) => {
     let position;
     const populateDisplay = (e, typeofmark) => {
