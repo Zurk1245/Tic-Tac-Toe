@@ -27,7 +27,7 @@ h1 {
 
 .gameBoard-section {
     width: 40%;
-    margin: 50px auto;
+    margin: 60px auto;
     height: 70vh;
 }
 
@@ -90,6 +90,7 @@ h1 {
     border-radius: 50px;
     opacity: 0;
     pointer-events: none;
+    z-index: 100;
 }
 
 .transition {
@@ -235,11 +236,15 @@ h1 {
         width: 150px;
     }
 
+    .players-div {
+        left: 50px;
+        right: 50px;
+    }
+
     #winnerModal {
         width: 70vw;
         top: 15vh;
         left: 15vw;
-        
     }
 
     #winnerModal > #restart-game {
@@ -277,10 +282,15 @@ h1 {
         width: 100px;
     }
 
-    
-
     .container > .playArea {
         font-size: 5rem;
+    }
+
+    #winnerModal {
+        width: 70vw;
+        top: 15vh;
+        left: 15vw;
+        height: 65vh;
     }
 
     #winner-message {
@@ -292,6 +302,36 @@ h1 {
     }
 }
 
+@media screen and (max-width: 420px) {
+    h1 {
+        font-size: 2rem;
+    }
+}
+
+@media screen and (max-width: 405px) {
+    .gameBoard-section {
+        width: 85%;
+        height: 60vh;
+        margin-top: 85px;
+    }
+
+    .container > .playArea {
+        font-size: 4rem;
+    }
+}
+
+@media screen and (max-width: 360px) {
+    .gameBoard-section {
+        width: 85%;
+        height: 60vh;
+        margin-top: 85px;
+        margin-bottom: 10px;
+    }
+
+    .container > .playArea {
+        font-size: 3rem;
+    }
+}
 /* @media screen and (min-width: 0px) {
     #winnerModal > #restart-game {
         font-size: 1rem;
