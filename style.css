@@ -27,7 +27,7 @@ h1 {
 
 .gameBoard-section {
     width: 40%;
-    margin: 60px auto;
+    margin: 40px auto;
     height: 70vh;
 }
 
@@ -46,7 +46,7 @@ h1 {
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 9rem;
+    font-size: 7rem;
     cursor: pointer;
     border: 3px solid var(--third);
     border-radius: 10px;
